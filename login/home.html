@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home page</title>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+            
+            
+            <!-- MATERIAL DESIGN ICONIC FONT -->
+        <link rel="stylesheet" href="design_files/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+                
+                <!-- STYLE CSS -->
+        <link rel="stylesheet" href="design_files/css/style.css">
+
+        <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-storage.js"></script>
+        <script src="js/index.js"></script>
+
+    </head>
+    <body class="h-100">
+        <nav class="navbar navbar-expand-lg bg-dark text-white">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a class="navbar-link" style="color: whitesmoke; text-decoration-style:wavy ;" href="#">
+                            <span style="color: white;">Blog App</span></a>
+                    </li>
+                    <li style="margin-left: 20px;">
+                        <a class="navbar-link" style="color: whitesmoke; text-decoration-style:wavy ;" href="#">
+                            <span style="color: white;">  Home</span></a>
+                        
+                    </li>
+                    <li style="margin-left: 20px;">
+                        <a class="navbar-link" style="color: whitesmoke; text-decoration-style:wavy;" href="#">
+                            <span style="color: white;">  My Blogs</span></a>
+                    </li>
+                </ul>
+                <div class="dropdown navbar-right">
+                    <button class="btn btn-light bg-dark text-white dropdown-toggle" type="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false" id="options-id">
+                        options
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="options-id">
+                        <a class="dropdown-item" id="btn-logout" onclick="myFunction4()">logout</a>
+                    </div>
+                </div>
+
+            </div>
+            
+        </nav>
+
+        <div class="row h-100 b-light">
+            <div class="col-lg-0 bg-secondary">
+                <ul class="nav flex-column">
+
+                </ul>
+            </div>
+            <div class="col-lg-12">
+                <div class="container" id="container">
+
+                </div>
+            </div>
+        </div>
+        
+        <a href="signin.html" class="text-dark">back to login</a>
+        <div>
+            <button class="btn btn-dark btn-block" onclick="Delete()">
+                delete account
+            </button>
+        </div>
+        <br>
+      <div>
+       <a href="update.html" role="button" class="btn btn-dark btn-block">update data</a> 
+      </div>
+      <br>
+      <div>
+          <button class="btn btn-dark btn-block" onclick="DeleteData()">
+            delete data from database
+          </button>
+      </div>
+      <br>
+      <div class="btn btn-dark btn-block" onclick="Details()">
+        get Details
+      </div>
+      <br>
+      <p id="demo" style="text-align: center; font-weight: bold;"></p>
+      <br>
+      <div class="btn btn-dark btn-block" onclick="myFunction4()">
+        signOut
+      </div>
+<br>
+      <div>
+          <button class="btn btn-dark btn-block" onclick="sendMail()">
+            send mail
+          </button>
+      </div>
+      <script>
+          function Details(){
+    
+    /*  this is to get user authentication details
+    var user = firebase.auth().currentUser;
+  var FirstName , LastName , address , bio , country ;
+  var  gender , phone;
+  
+  if (user != null) {
+    FirstName = user.FirstName;
+    LastName = user.LastName;
+    address = user.address;
+    bio = user.bio;
+    country=user.country;
+    gender=user.gender;
+    phone=user.phone;
+    uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
+                     // this value to authenticate with your backend server, if
+          window.alert("your Name "+ user.email);         // you have one. Use User.getToken() instead.
+  }  */
+  
+  var userID = firebase.auth().currentUser.uid;
+                firebase.database().ref('Users/' + userID).once('value').then(function(snapshot){
+                    if(snapshot.val())
+                    {
+                         // window.alert("name: "+snapshot.val().FirstName);
+                         document.getElementById("demo").innerHTML = "FirstName : "+snapshot.val().FirstName +
+                         "<br>LastName : "+ snapshot.val().LastName;
+                    }else{
+                      window.location.href = "accountsettings.html";
+                    }
+                });
+  }
+
+  //function DeleteData(){
+    //var userID = firebase.auth().currentUser.uid;
+      //          firebase.database().ref('Users/' + userID).remove();
+        //        window.alert("data deleted");
+  //}
+      </script>
+    </body>
+</html>

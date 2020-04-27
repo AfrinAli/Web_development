@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Account Settings.</title>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+            
+            
+            <!-- MATERIAL DESIGN ICONIC FONT -->
+        <link rel="stylesheet" href="design_files/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+                
+                <!-- STYLE CSS -->
+        <link rel="stylesheet" href="design_files/css/style.css">
+
+        
+        <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-storage.js"></script>
+
+        <script src="js/index.js"></script>
+
+
+    </head>
+    <body>
+        <div class="wrapper" style="background-image: url('design_files/images/accountSettingsback.jpg');">
+            <div class="inner">
+                <div class="image-holder">
+                    <img src="design_files/images/asettings.jpg">
+                </div>
+                <form action="">
+                    <h3>Account Settings.</h3>
+                    <div class="form-group">
+                        <input id="FirstName" type="text" placeholder="Enter First Name" class="form-control">
+                        <input id="LastName" type="text" placeholder="Enter Last Name" class="form-control">
+
+                      </div>
+                      <div class="form-wrapper">
+                          <select name="" id="country" class="form-control">
+                              <option value="" disabled selected>country</option>
+                              <option value="South Africa">South Africa</option>
+                              <option value="USA">USA</option>
+                              <option value="INDIA">INDIA</option>
+                              <option value="UK">UK</option>
+                              <option value="china">china</option>
+                              </select>
+                        </div>
+                        <i class="zmdi zmdi-caret-down" style="font-size: 17px;"> </i>
+                        <div class="form-wrapper">
+                          <input id="phone" type="number" placeholder="Enter Phone Number" class="form-control">
+                          <i class="zmdi zmdi-tablet-mac"> </i>
+                        </div>
+                        <div class="form-wrapper">
+                            <select name="" id="gender" class="form-control">
+                                <option value="" disabled selected>Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="others">others</option>
+                                </select>
+                                <i class="zmdi zmdi-caret-down" style="font-size: 17px;"> </i>
+                         </div>
+
+                         <div class="form-wrapper">
+                            <input id="address" type="text" placeholder="Enter Address" class="form-control">
+                            <i class="zmdi zmdi-pin"> </i>
+                          </div>
+
+                         <div class="form-wrapper">
+                            <input id="bio" type="text" placeholder="Enter Bio" class="form-control">
+                            <i class="zmdi zmdi-account-box-mail"> </i>
+                          </div>
+
+                        <div class="form-group container-login100-form-btn">
+                          <button id="btn-update" type="button" onclick="myFunction5()">
+                              Update And Save
+                              <i class="zmdi zmdi-arrow-right"> </i>
+                          </button>
+                        </div>
+                        
+                </form>
+            </div>
+            
+  </div>
+  <script>
+    firebase.auth().onAuthStateChanged(function(user){
+        if(user)
+        {
+            var userID = firebase.auth().currentUser.uid;
+            firebase.database().ref('Users/' + userID).once('value').then(function(snapshot){
+                if(snapshot.val())
+                {
+                      window.location.href = "home.html";
+                }
+            });
+        }
+    });
+</script>
+  
+    </body>
+</html>
